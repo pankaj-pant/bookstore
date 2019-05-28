@@ -11,6 +11,10 @@ import com.example.Bookstore.domain.Book;
 import com.example.Bookstore.domain.BookRepository;
 import com.example.Bookstore.domain.Category;
 import com.example.Bookstore.domain.CategoryRepository;
+import com.example.Bookstore.domain.User;
+import com.example.Bookstore.domain.UserRepository;
+
+
 
 
 
@@ -23,7 +27,7 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BookRepository repository, CategoryRepository crepository) {
+	public CommandLineRunner demo(BookRepository repository, CategoryRepository crepository, UserRepository urepository) {
 
 		return (args) -> {
 			log.info("save a couple of books");
@@ -42,6 +46,12 @@ public class BookstoreApplication {
 			repository.save(book1);
 			repository.save(book2);
 			repository.save(book3);
+			
+			// Create users: admin/admin user/user
+						User user1 = new User("user", "$2a$10$uUCQxVK.F7dKeKPaZyI01evxZTWvDdXUdzqI0U9G3iUWIwjVw423y", "user@bookstore.com", "USER");
+						User user2 = new User("admin", "$2a$10$oGZS6HF.o5DnH/1gekJ11.cZm0iu9./AosezueO3IQ0Qs66wDW1xe", "admin@bookstore.com", "ADMIN");
+						urepository.save(user1);
+						urepository.save(user2);
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
